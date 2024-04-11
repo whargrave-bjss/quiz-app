@@ -1,0 +1,55 @@
+.main-container {
+  display: flex;
+  flex-direction: row; /* Change this to row to align children horizontally */
+  justify-content: center;
+  align-items: flex-start; /* Adjust this as needed to align items the way you want */
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 20px;
+  gap: 20px; /* Adds space between the form and list containers */
+}
+
+.form-container, .list-container {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px; /* Adjust based on preference */
+  box-sizing: border-box;
+}
+  input[type="text"],
+  button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+  }
+  
+  button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .toggle-button {
+    background-color: #6c757d;
+  }
+  
+  .toggle-button:hover {
+    background-color: #545b62;
+  }
+  
+  label {
+    display: block;
+    text-align: left;
+    margin-top: 15px;
+  }
+  
