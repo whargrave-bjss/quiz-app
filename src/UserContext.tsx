@@ -15,7 +15,7 @@ interface User {
   name: string;
 }
 
-interface QuestionSet {
+export interface QuestionSet {
   id: string;
   questions: Question[]
   name: string;
