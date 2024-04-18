@@ -1,15 +1,16 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useRef, useState} from "react";
 import "./styles/questionform.css"
-import { UserContext } from "./UserContext";
+import { Question, QuestionFormProps, useUserContext } from "./UserContext";
 import { QuestionList } from "./QuestionList";
 import { QuizSetUpForm } from "./QuizSetupForm";
-export const QuestionForm = ({onSubmit}) => {
-const {currentUser, questionSet, addQuestionToSet} = useContext(UserContext);
+export const QuestionForm = ({addQuestionsToSet}: QuestionFormProps) => {
+
+const {currentUser, questionSet} = useUserContext();
 const [answerType, setAnswerType] = useState("");
 const [options, setOptions] = useState([{text: '', isCorrect: false}]);
-
-const handleAnswerTypeChange = (e) => {
-    const newType = e.target.value;
+const questionRef = useRef<HTMLInputElement>(null);
+const handleAnswerTypeChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const newType = event.target.value;
     setAnswerType(newType);
     if (newType === "Multiple Choice") {
       setOptions(Array(4).fill(null).map(() => ({ text: '', isCorrect: false })));
@@ -23,7 +24,7 @@ const handleAnswerTypeChange = (e) => {
   }
 };
 
-const handleOptionChange = (index, value) => {
+const handleOptionChange = (index: number, value: string) => {
   const newOptions = options.map((option, idx) => {
     if (idx === index) {
       return { ...option, text: value };
@@ -33,7 +34,7 @@ const handleOptionChange = (index, value) => {
   setOptions(newOptions);
 };
 
-const handleCorrectAnswerChange = (correctIndex) => {
+const handleCorrectAnswerChange = (correctIndex: number) => {
   const newOptions = options.map((option, index) => ({
     ...option,
     isCorrect: index === correctIndex,
@@ -41,17 +42,23 @@ const handleCorrectAnswerChange = (correctIndex) => {
   setOptions(newOptions)
 }
 
-const handleQuestionSubmit = (e) => {
-  e.preventDefault();
-  const questionInput = e.target.elements.question;
-  const correctAnswer = options.find(option => option.isCorrect)?.text
-  const formData = {
-    question: questionInput.value, // Assuming the question input has name="question"
-    answerType: answerType, // Assuming this is stored in state
-    answers: options.map(option => option.text),
-    correctAnswer: correctAnswer,
-  };
- addQuestionToSet(formData); // Call the passed-in submit function
+const handleQuestionSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+
+  if (questionRef.current) {
+    const questionInput = questionRef.current.value;
+    const correctAnswer = options.find(option => option.isCorrect)?.text || '';
+
+    const formData: Question = {
+      id: "",
+      question: questionInput,
+      type: answerType,
+      choices: options.map(option => option.text),
+      answer: correctAnswer
+    };
+
+    addQuestionsToSet(formData); 
+  }
 };
 
 const renderInputs = () => options.map((option, index) => (

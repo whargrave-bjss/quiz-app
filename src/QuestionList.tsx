@@ -1,8 +1,8 @@
 import React, { useContext} from "react";
-import { UserContext } from "../src/UserContext";
+import { UserContext, useUserContext } from "./UserContext";
 
-export const QuestionList = ({onSubmit}) => {
-    const {questionSet} = useContext(UserContext);
+export const QuestionList = () => {
+    const {questionSet} = useUserContext();
     
     return (
     <>

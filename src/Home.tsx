@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react"
-import { UserContext } from "./UserContext";
+import { useUserContext } from "./UserContext";
 import { mockCurrentUser } from "./sampleData";
 import { Link } from "react-router-dom";
 import "./styles/home.css"
 
+
 export const Home = () =>  {
+
   const [isLogin, setIsLogin] = useState(true);
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  const { currentUser, setCurrentUser } = useUserContext();
   const toggleFormMode = () => setIsLogin(!isLogin);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -14,7 +16,7 @@ export const Home = () =>  {
     const username = (event.target as HTMLFormElement).username.value;
     const password = (event.target as HTMLFormElement).password.value;
   
-    const url = `${process.env.REACT_APP_API_URL}${isLogin ? '/api/login' : '/api/register'}`;
+    const url: string = `${process.env.REACT_APP_API_URL}${isLogin ? '/api/login' : '/api/register'}`;
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

@@ -6,7 +6,7 @@ import { QuestionForm } from "./QuestionForm";
 import { mockCurrentUser, manualQuestionsSet } from "./sampleData";
 import { QuestionsDisplay } from "./QuestionsDisplay";
 import { UserProvider, UserContext } from "./UserContext";
-import { Home } from "./home";
+import { Home } from "./Home";
 
 const mockSubmit = (...args) => {
   console.log('mockSubmit called with args:', args);

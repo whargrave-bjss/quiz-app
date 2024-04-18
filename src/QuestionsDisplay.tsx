@@ -1,15 +1,17 @@
 import React, { useContext, useState } from "react";
-import { UserContext } from "./UserContext";
-export const QuestionsDisplay = ({ onSubmit}) => {
-  const {currentUser, questionSet} = useContext(UserContext);
+import { useUserContext, Question, QuestionsDisplayProps } from "./UserContext";
+
+
+export const QuestionsDisplay = ({ onSubmit}: QuestionsDisplayProps) => {
+  const {currentUser, questionSet} = useUserContext();
   const [userPoints, setUserPoints] = useState(0);
-    const handleSubmit = (event) => {
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
       
-        const formData = new FormData(event.target);
+        const formData = new FormData(event.currentTarget);
         let pointsAwarded = 0;
       
-        questionSet.questions.forEach((question, index) => {
+        questionSet.questions.forEach((question: Question, index: number) => {
           const fieldName = `questionChoice-${index}`;
           let userAnswer = formData.get(fieldName);
       
@@ -19,9 +21,8 @@ export const QuestionsDisplay = ({ onSubmit}) => {
         });
       
         setUserPoints(userPoints + pointsAwarded);
-        onSubmit(event, pointsAwarded);
+        onSubmit(pointsAwarded);
       };
-    
     
     return(
         <>
@@ -40,7 +41,7 @@ export const QuestionsDisplay = ({ onSubmit}) => {
                     type="text"
                   />
                 ) : (
-                  q.choices.map((choice, choiceIndex) => (
+                  (typeof q.choices ==='string' ? [q.choices] : q.choices).map((choice, choiceIndex: number) => (
                     <div key={choiceIndex}>
                       <input
                         id={`choice-${index}-${choiceIndex}`}
