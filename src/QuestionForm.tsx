@@ -2,7 +2,7 @@ import React, {useContext, useRef, useState} from "react";
 import "./styles/questionform.css"
 import { Question, QuestionFormProps, useUserContext } from "./UserContext";
 import { QuestionList } from "./QuestionList";
-import { QuizSetUpForm } from "./QuizSetUpForm";
+import { QuizSetUpForm } from "./QuizSetupForm";
 export const QuestionForm = ({addQuestionsToSet}: QuestionFormProps) => {
 
 const {currentUser, questionSet} = useUserContext();
